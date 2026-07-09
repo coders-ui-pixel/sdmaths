@@ -3,9 +3,16 @@ import { writeFile, mkdir } from "fs/promises"
 import { join } from "path"
 import { auth } from "@/auth"
 
-// ─── Asset CDN base URL ───────────────────────────────────────────────────────
-// All uploaded files are served from the CDN rather than the app's own domain.
-const ASSET_BASE_URL = "https://assets.sdmaths.com"
+// ─── Asset CDN ─────────────────────────────────────────────────────────────
+// Uploaded files are served from a separate domain/subdomain (Apache serving
+// static files directly) rather than through the Next.js app, so large video
+// uploads don't burn Node/Passenger resources. UPLOAD_DIR must point OUTSIDE
+// the app's own folder — if it's nested inside the Passenger app root, cPanel's
+// Passenger .htaccess (which applies by filesystem path, not by domain) ends up
+// routing static asset requests through Node too. Locally, both default to the
+// app's own public/uploads folder + relative URLs so dev works with no setup.
+const ASSET_BASE_URL = process.env.ASSET_BASE_URL || ""
+const UPLOAD_DIR = process.env.UPLOAD_DIR || join(process.cwd(), "public", "uploads")
 
 export async function POST(req: Request) {
   try {
@@ -56,16 +63,15 @@ export async function POST(req: Request) {
     // Sanitize filename: remove all special characters except . and -
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "-")
     const filename = `${Date.now()}-${sanitizedName}`
-    const uploadDir = join(process.cwd(), "public", "uploads")
-    
+
     try {
-      await mkdir(uploadDir, { recursive: true })
+      await mkdir(UPLOAD_DIR, { recursive: true })
     } catch (e) {
       // Ignore if dir exists
     }
 
     try {
-      const path = join(uploadDir, filename)
+      const path = join(UPLOAD_DIR, filename)
       await writeFile(path, buffer)
       console.log("File saved to:", path)
     } catch (writeError: any) {
@@ -73,8 +79,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: `File system error: ${writeError.message}` }, { status: 500 })
     }
 
-    // Return the full CDN URL instead of a relative path
-    const url = `${ASSET_BASE_URL}/uploads/${filename}`
+    // ASSET_BASE_URL unset (local dev) → relative URL served by Next's own public/ folder.
+    // ASSET_BASE_URL set (production) → absolute URL served by the separate static-file domain.
+    const url = ASSET_BASE_URL ? `${ASSET_BASE_URL}/uploads/${filename}` : `/uploads/${filename}`
     return NextResponse.json({ url })
   } catch (error) {
     console.error("CRITICAL UPLOAD ERROR:", error)
