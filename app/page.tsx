@@ -115,7 +115,7 @@ export default async function Home() {
               <div className="flex flex-wrap gap-4 mb-10">
                 {session ? (
                   <Link
-                    href={(session.user as any)?.role === "ADMIN" ? "http://lms.sdmaths.com" : "/dashboard"}
+                    href={(session.user as any)?.role === "ADMIN" ? "/lms" : "/dashboard"}
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-base text-slate-900 shadow-[0_8px_0_0_rgba(0,0,0,0.15)] hover:shadow-[0_4px_0_0_rgba(0,0,0,0.15)] hover:translate-y-1 transition-all"
                     style={{ backgroundColor: "var(--primary)" }}
                   >
