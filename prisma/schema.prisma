@@ -1,0 +1,343 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String?
+  email         String?     @unique
+  password      String?
+  phone         String?
+  emailVerified DateTime?
+  image         String?
+  role          Role        @default(STUDENT)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  accounts      Account[]
+  mcqResults    MCQResult[]
+  payments      Payment[]
+  progress      Progress[]
+  sessions      Session[]
+  notifications Notification[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id          String   @id @default(cuid())
+  identifier  String
+  token       String   @unique
+  expires     DateTime
+
+  @@unique([identifier, token])
+}
+
+model Course {
+  id                 String              @id @default(cuid())
+  title              String
+  slug               String              @unique
+  description        String              @db.Text
+  price              Float
+  discountAmount     Float               @default(0)
+  discountLimit      Int                 @default(0)
+  thumbnail          String?
+  paymentQrUrl       String?
+  seoTitle           String?
+  seoDescription     String?             @db.Text
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  importantQuestions ImportantQuestion[]
+  hasMcqs            Boolean             @default(true)
+  hasVideos          Boolean             @default(true)
+  hasLiveClasses     Boolean             @default(false)
+  hasNotes           Boolean             @default(true)
+  mcqExams           MCQExam[]           @relation("CourseExams")
+  playlists          Playlist[]          @relation("CoursePlaylists")
+  notes              Note[]              @relation("CourseNotes")
+  payments           Payment[]
+  questions          MCQQuestion[]
+}
+
+model Playlist {
+  id        String   @id @default(cuid())
+  title     String
+  courses   Course[] @relation("CoursePlaylists")
+  lessons   Lesson[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id               String     @id @default(cuid())
+  title            String
+  videoUrl         String?
+  content          String?    @db.LongText
+  isFreeSample     Boolean    @default(false)
+  isFeaturedSample Boolean    @default(false)
+  order            Int
+  playlistId       String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  playlist         Playlist?  @relation(fields: [playlistId], references: [id])
+  progress         Progress[]
+}
+
+model MCQExam {
+  id               String        @id @default(cuid())
+  title            String
+  isFree           Boolean       @default(false)
+  isFeaturedOnHome Boolean       @default(false)
+  negativeMarking  Boolean       @default(false)
+  examType         ExamType      @default(PRACTICE)
+  startTime        DateTime?     // LIVE exams only: attempts are rejected before this time
+  endTime          DateTime?     // LIVE exams only: attempts are rejected after this time
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  courses          Course[]      @relation("CourseExams")
+  questions        MCQQuestion[] @relation("ExamQuestions")
+  results          MCQResult[]
+}
+
+model Subject {
+  id           String              @id @default(cuid())
+  name         String              @unique
+  createdAt    DateTime            @default(now())
+  questions    MCQQuestion[]
+}
+
+// The question bank is organized by Subject, independent of any course —
+// a question isn't "owned" by a course; exams (which ARE course-scoped, via
+// MCQExam.courses) simply pull whichever bank questions they want regardless
+// of subject-to-course relationships. courseId is a legacy/optional pointer
+// kept only so pre-existing rows don't lose their original association.
+// `marks` is set once when the question is added to the bank (e.g. 1 or 2)
+// and is what it's worth wherever it's used, in any exam set.
+model MCQQuestion {
+  id                    String    @id @default(cuid())
+  courseId              String?
+  subjectId             String?
+  question              String    @db.Text
+  options               Json
+  correctOption         Int
+  marks                 Float     @default(1)
+  explanation           String?   @db.Text
+  explanationVideoUrl   String?  // Admin can attach a YouTube solving video
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  course                Course?   @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  subject               Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  exams                 MCQExam[] @relation("ExamQuestions")
+}
+
+model MCQResult {
+  id        String   @id @default(cuid())
+  userId    String
+  examId    String
+  score     Float
+  total     Int
+  answers   Json?    // Store user's specific answers for viewing later
+  createdAt DateTime @default(now())
+  exam      MCQExam  @relation(fields: [examId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, examId])
+}
+
+model ImportantQuestion {
+  id             String   @id @default(cuid())
+  question       String   @db.Text
+  videoAnswerUrl String?
+  textAnswer     String?  @db.Text
+  isVvi          Boolean  @default(false)
+  courseId       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  course         Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+// Notes are shown to students on-screen (read-only, copy/print discouraged),
+// not distributed as downloadable files. A note is either written content
+// (LaTeX/rich text) or an uploaded PDF displayed inline — never both empty.
+// A note can be assigned to multiple courses at once via the many-to-many below.
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?  @db.LongText
+  fileUrl   String?  // uploaded PDF — rendered inline to students, not offered as a download
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courses   Course[] @relation("CourseNotes")
+}
+
+model Payment {
+  id        String        @id @default(cuid())
+  amount    Float
+  paymentId String?       // The transaction ID entered by the user
+  proofUrl  String?       // The screenshot URL (absent for free auto-registrations)
+  status    PaymentStatus @default(PENDING)
+  userId    String
+  courseId  String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  course    Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Branding {
+  id             String   @id @default("global")
+  siteName       String   @default("SOM")
+  logoUrl        String?
+  faviconUrl     String?
+  paymentQrUrl   String?  // The QR code for payments
+  contactEmail   String?  // Customizable site email
+  contactPhone   String?  // Customizable site phone
+  facebookUrl    String?
+  instagramUrl   String?
+  youtubeUrl     String?
+  telegramUrl    String?
+  primaryColor   String   @default("#3b82f6")
+  secondaryColor String   @default("#1e40af")
+  heroHeadline   String   @default("Learn Math")
+  heroHighlight  String   @default("Like A Pro")
+  heroSubtitle   String   @db.Text
+  aboutImageUrl  String?
+  updatedAt      DateTime @updatedAt
+}
+
+model Progress {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  completed Boolean  @default(true)
+  watchTime Int      @default(0)
+  updatedAt DateTime @updatedAt
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model NotificationTemplate {
+  id        String   @id @default(cuid())
+  title     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FeaturedVideo {
+  id           String   @id @default(cuid())
+  title        String
+  videoUrl     String
+  thumbnailUrl String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum PaymentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum ExamType {
+  PRACTICE
+  LIVE
+}
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  summary      String   @db.Text
+  content      String   @db.LongText
+  imageUrl     String?
+  authorName   String   @default("Admin")
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Syllabus {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.LongText
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PopupNotice {
+  id        String   @id @default(cuid())
+  title     String
+  message   String   @db.Text
+  linkUrl   String?
+  linkLabel String?
+  imageUrl  String?
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PasswordResetRequest {
+  id        String   @id @default(cuid())
+  name      String
+  studentId String
+  email     String
+  status    String   @default("PENDING") // PENDING, COMPLETED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

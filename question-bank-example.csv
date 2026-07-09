@@ -1,0 +1,11 @@
+question,optionA,optionB,optionC,optionD,correctOption,explanation,explanationVideoUrl
+"What is $2 + 2$?","3","4","5","6",B,"Basic addition: $2+2=4$.",
+"Solve for $x$: $x + 5 = 10$","$x = 2$","$x = 5$","$x = 10$","$x = 15$",B,"Subtract 5 from both sides: $x = 10 - 5 = 5$.",
+"What is the value of $x$ in $2x^2 - 8 = 0$?","$x = \pm 1$","$x = \pm 2$","$x = \pm 4$","$x = \pm 8$",2,"Divide by 2: $x^2 = 4$, so $x = \pm 2$.",
+"What is the derivative of $f(x) = x^2$?","$f'(x) = x$","$f'(x) = 2x$","$f'(x) = x^2$","$f'(x) = 2$",B,"Using the power rule: $\frac{d}{dx}x^2 = 2x$.",https://www.youtube.com/watch?v=example1
+"What is the area of a circle with radius $r = 3$?","$6\pi$","$9\pi$","$3\pi$","$12\pi$",B,"Area $= \pi r^2 = \pi (3)^2 = 9\pi$.",
+"Simplify: $\frac{6}{8}$","$\frac{1}{2}$","$\frac{2}{3}$","$\frac{3}{4}$","$\frac{4}{5}$",C,"Divide numerator and denominator by 2: $\frac{6}{8} = \frac{3}{4}$.",
+"What is $\sin(90^\circ)$?","0","$\frac{1}{2}$","$\frac{\sqrt{2}}{2}$","1",D,"$\sin(90^\circ) = 1$ by definition of the unit circle.",
+"If a triangle has angles $50^\circ$ and $60^\circ$, what is the third angle?","$60^\circ$","$70^\circ$","$80^\circ$","$90^\circ$",B,"Angles in a triangle sum to $180^\circ$: $180 - 50 - 60 = 70^\circ$.",
+"What is the slope of the line $y = 3x + 7$?","3","7","$-3$","$\frac{1}{3}$",A,"In slope-intercept form $y = mx + c$, the slope $m = 3$.",
+"Factorize: $x^2 - 9$","$(x-3)(x+3)$","$(x-9)(x+1)$","$(x-3)^2$","$(x+9)(x-1)$",A,"Difference of squares: $x^2 - 9 = (x-3)(x+3)$.",

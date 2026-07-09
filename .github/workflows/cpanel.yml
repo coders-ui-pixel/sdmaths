@@ -1,0 +1,50 @@
+name: Deploy to cPanel
+
+# Assumes the app is already set up on cPanel via "Git Version Control"
+# (cPanel > Git Version Control > Create, pointing at this GitHub repo),
+# and runs as a cPanel "Setup Node.js App" (Passenger). This workflow just
+# SSHes in, pulls the latest commit, reinstalls deps, rebuilds, and restarts
+# the app — it does not create the cPanel app for you.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into cPanel and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          username: ${{ secrets.CPANEL_SSH_USER }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          script: |
+            set -e
+            cd "${{ secrets.CPANEL_APP_PATH }}"
+
+            # Pull latest commit that cPanel's Git Version Control already cloned
+            git pull origin main
+
+            # cPanel's "Setup Node.js App" puts node/npm on PATH via this helper
+            source /home/${{ secrets.CPANEL_SSH_USER }}/nodevenv/${{ secrets.CPANEL_APP_PATH }}/*/bin/activate 2>/dev/null || true
+
+            npm ci
+            npx prisma generate
+            npm run build
+
+            # Passenger restarts the app when tmp/restart.txt's mtime changes
+            mkdir -p tmp
+            touch tmp/restart.txt
+
+# Required repo secrets (Settings > Secrets and variables > Actions):
+#   CPANEL_SSH_HOST  - e.g. server123.your-host.com
+#   CPANEL_SSH_PORT  - usually 21098 on cPanel (check Manage Shell Access), not 22
+#   CPANEL_SSH_USER  - cPanel account username
+#   CPANEL_SSH_KEY   - private key with access to that account (add the matching
+#                      public key under cPanel > SSH Access > Manage SSH Keys)
+#   CPANEL_APP_PATH  - absolute path to the app on the server,
+#                      e.g. /home/username/sdmaths
