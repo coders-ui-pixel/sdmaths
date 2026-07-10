@@ -46,7 +46,7 @@ export function NoteReaderInline({ content, fileUrl }: NoteReaderInlineProps) {
     <>
       {fileUrl ? (
         <iframe
-          src={fileUrl}
+          src={`${fileUrl}#toolbar=0&navpanes=0`}
           className="w-full h-[85vh] border-0"
           title="Note PDF"
         />
