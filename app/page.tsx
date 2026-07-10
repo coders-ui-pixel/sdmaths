@@ -132,7 +132,7 @@ export default async function Home() {
                     </Link>
                     <Link
                       href="/login"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-base border-2 border-slate-900 dark:border-white text-slate-900 dark:text-white hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-base border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white transition-colors"
                     >
                       Student Login
                     </Link>
