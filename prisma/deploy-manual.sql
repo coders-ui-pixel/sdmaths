@@ -375,13 +375,13 @@ ALTER TABLE `_CoursePlaylists` ADD CONSTRAINT `_CoursePlaylists_A_fkey` FOREIGN 
 -- AddForeignKey
 ALTER TABLE `_CoursePlaylists` ADD CONSTRAINT `_CoursePlaylists_B_fkey` FOREIGN KEY (`B`) REFERENCES `Playlist`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('9d546987-8c38-475f-8944-1d7e9c0fe20c', '7819a7548ebbb0abc36c056242e3ee6cd46a9c111af540d5cbdd43c6cc280368', NOW(3), '20260523063611_migrateey', 1);
+VALUES ('cce02319-e62c-4f45-a553-14e0ae589742', '7819a7548ebbb0abc36c056242e3ee6cd46a9c111af540d5cbdd43c6cc280368', NOW(3), '20260523063611_migrateey', 1);
 
 -- ===== Migration: 20260524162508_add_isvvi =====
 -- AlterTable
 ALTER TABLE `ImportantQuestion` ADD COLUMN `isVvi` BOOLEAN NOT NULL DEFAULT false;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('8e8b1e4f-d1c5-4725-8fa4-c40f2f3d258b', '7de8ba74041ea7b1729c4dc438feb02a8e33306c094fb132028fd366eb8e1eed', NOW(3), '20260524162508_add_isvvi', 1);
+VALUES ('da34652e-bd72-439a-b818-95f8942cd0a2', '7de8ba74041ea7b1729c4dc438feb02a8e33306c094fb132028fd366eb8e1eed', NOW(3), '20260524162508_add_isvvi', 1);
 
 -- ===== Migration: 20260524164456_add_isvvii =====
 -- AlterTable
@@ -401,28 +401,28 @@ CREATE TABLE `PasswordResetRequest` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('cacef053-f277-4d31-a4fa-894b61e870d2', 'fe9d085c7c92e179975f9508f05f290e13df10e9ad235e811d1b08c6d112bcc4', NOW(3), '20260524164456_add_isvvii', 1);
+VALUES ('491ead66-7b25-4086-a1e5-46a38d0f220d', 'fe9d085c7c92e179975f9508f05f290e13df10e9ad235e811d1b08c6d112bcc4', NOW(3), '20260524164456_add_isvvii', 1);
 
 -- ===== Migration: 20260602000000_add_note_content_latex =====
 -- Add optional inline LaTeX content field to Note model
 ALTER TABLE `Note` ADD COLUMN `content` LONGTEXT NULL;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('b9ff0147-e3d7-4f8b-a35a-9ae1c7860272', 'fc3611da3c48b478009760b3ded9153b192adf6429e82dabc6cb5285c6558eb9', NOW(3), '20260602000000_add_note_content_latex', 1);
+VALUES ('84d2a838-86d0-4b38-a91d-a9de976c3ef6', 'fc3611da3c48b478009760b3ded9153b192adf6429e82dabc6cb5285c6558eb9', NOW(3), '20260602000000_add_note_content_latex', 1);
 
 -- ===== Migration: 20260708161113_add_phone_and_optional_proof =====
 -- AlterTable
-ALTER TABLE `payment` MODIFY `proofUrl` VARCHAR(191) NULL;
+ALTER TABLE `Payment` MODIFY `proofUrl` VARCHAR(191) NULL;
 
 -- AlterTable
-ALTER TABLE `user` ADD COLUMN `phone` VARCHAR(191) NULL;
+ALTER TABLE `User` ADD COLUMN `phone` VARCHAR(191) NULL;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('074b3a1d-7fda-4470-94f1-401e3380bbab', '9a5960dd47ed5e5b577df21e7cad4b437485e7d009e2e47bbbe8698eb46cbbaf', NOW(3), '20260708161113_add_phone_and_optional_proof', 1);
+VALUES ('be596504-1925-4e77-ad0a-3467820fe247', '9a5960dd47ed5e5b577df21e7cad4b437485e7d009e2e47bbbe8698eb46cbbaf', NOW(3), '20260708161113_add_phone_and_optional_proof', 1);
 
 -- ===== Migration: 20260708163247_default_sitename_som =====
 -- AlterTable
-ALTER TABLE `branding` MODIFY `siteName` VARCHAR(191) NOT NULL DEFAULT 'SOM';
+ALTER TABLE `Branding` MODIFY `siteName` VARCHAR(191) NOT NULL DEFAULT 'SOM';
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('84074961-c778-4ea8-9027-877845288816', 'cfcb4a17fc913245b384049c1719817d25fb29bd7f6de85687093e0b04f18117', NOW(3), '20260708163247_default_sitename_som', 1);
+VALUES ('00b1e96e-7b0e-43fe-8b96-db9de0b57950', 'cfcb4a17fc913245b384049c1719817d25fb29bd7f6de85687093e0b04f18117', NOW(3), '20260708163247_default_sitename_som', 1);
 
 -- ===== Migration: 20260708181406_mcq_question_bank_and_negative_marking =====
 -- Add new MCQExam flags
@@ -466,22 +466,22 @@ ALTER TABLE `MCQQuestion` ADD CONSTRAINT `MCQQuestion_courseId_fkey` FOREIGN KEY
 -- Negative marking produces fractional scores
 ALTER TABLE `MCQResult` MODIFY COLUMN `score` DOUBLE NOT NULL;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('975727d0-bf11-4f62-a823-2d397d7db97a', 'a009d532a3baac00a827d3830e1cef0a63b27596bf5a8de02f09835b02425d76', NOW(3), '20260708181406_mcq_question_bank_and_negative_marking', 1);
+VALUES ('2366d52f-1f4e-4fd4-b5c5-6662fbf02b30', 'a009d532a3baac00a827d3830e1cef0a63b27596bf5a8de02f09835b02425d76', NOW(3), '20260708181406_mcq_question_bank_and_negative_marking', 1);
 
 -- ===== Migration: 20260709024844_course_payment_qr =====
 -- AlterTable
-ALTER TABLE `course` ADD COLUMN `paymentQrUrl` VARCHAR(191) NULL;
+ALTER TABLE `Course` ADD COLUMN `paymentQrUrl` VARCHAR(191) NULL;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('83694560-8a6d-4dfd-a4ab-0774638b26bd', 'bd1a0c30588e8cb457e10785a972c3bb2d146219ba6a8a6d5d173d99d4b98ffe', NOW(3), '20260709024844_course_payment_qr', 1);
+VALUES ('bc26b5c7-b2e0-41b9-82f3-af890bd78dfe', 'bd1a0c30588e8cb457e10785a972c3bb2d146219ba6a8a6d5d173d99d4b98ffe', NOW(3), '20260709024844_course_payment_qr', 1);
 
 -- ===== Migration: 20260709031629_subjects_live_exams_syllabus_popup =====
 -- AlterTable
-ALTER TABLE `mcqexam` ADD COLUMN `endTime` DATETIME(3) NULL,
+ALTER TABLE `MCQExam` ADD COLUMN `endTime` DATETIME(3) NULL,
     ADD COLUMN `examType` ENUM('PRACTICE', 'LIVE') NOT NULL DEFAULT 'PRACTICE',
     ADD COLUMN `startTime` DATETIME(3) NULL;
 
 -- AlterTable
-ALTER TABLE `mcqquestion` ADD COLUMN `subjectId` VARCHAR(191) NULL;
+ALTER TABLE `MCQQuestion` ADD COLUMN `subjectId` VARCHAR(191) NULL;
 
 -- CreateTable
 CREATE TABLE `Subject` (
@@ -523,7 +523,7 @@ CREATE TABLE `PopupNotice` (
 -- AddForeignKey
 ALTER TABLE `MCQQuestion` ADD CONSTRAINT `MCQQuestion_subjectId_fkey` FOREIGN KEY (`subjectId`) REFERENCES `Subject`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('142256ec-3a16-4489-8edd-c9fae65d8cb9', '3e9cc6791a2cc176a3b3f09e0ead7df00daee870ca3439d5eb3ff0e7598561a5', NOW(3), '20260709031629_subjects_live_exams_syllabus_popup', 1);
+VALUES ('4d6c5529-63ac-4ab9-b913-48f7142da4b2', '3e9cc6791a2cc176a3b3f09e0ead7df00daee870ca3439d5eb3ff0e7598561a5', NOW(3), '20260709031629_subjects_live_exams_syllabus_popup', 1);
 
 -- ===== Migration: 20260709071122_exam_subject_marks =====
 -- CreateTable
@@ -543,22 +543,22 @@ ALTER TABLE `ExamSubjectMarks` ADD CONSTRAINT `ExamSubjectMarks_examId_fkey` FOR
 -- AddForeignKey
 ALTER TABLE `ExamSubjectMarks` ADD CONSTRAINT `ExamSubjectMarks_subjectId_fkey` FOREIGN KEY (`subjectId`) REFERENCES `Subject`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('8caeb87c-32d8-4636-9da0-196ed14149e4', '9abf5a7e71167f19e978f55f5a8d850d3f067958316e7e493bb589820e68d5e5', NOW(3), '20260709071122_exam_subject_marks', 1);
+VALUES ('09d4cac9-e6db-42e0-b918-25bd4f31bfa1', '9abf5a7e71167f19e978f55f5a8d850d3f067958316e7e493bb589820e68d5e5', NOW(3), '20260709071122_exam_subject_marks', 1);
 
 -- ===== Migration: 20260709072423_question_bank_course_optional =====
 -- DropForeignKey
-ALTER TABLE `mcqquestion` DROP FOREIGN KEY `MCQQuestion_courseId_fkey`;
+ALTER TABLE `MCQQuestion` DROP FOREIGN KEY `MCQQuestion_courseId_fkey`;
 
 -- DropIndex
-DROP INDEX `MCQQuestion_courseId_fkey` ON `mcqquestion`;
+DROP INDEX `MCQQuestion_courseId_fkey` ON `MCQQuestion`;
 
 -- AlterTable
-ALTER TABLE `mcqquestion` MODIFY `courseId` VARCHAR(191) NULL;
+ALTER TABLE `MCQQuestion` MODIFY `courseId` VARCHAR(191) NULL;
 
 -- AddForeignKey
 ALTER TABLE `MCQQuestion` ADD CONSTRAINT `MCQQuestion_courseId_fkey` FOREIGN KEY (`courseId`) REFERENCES `Course`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('37d1ae29-df69-4b56-8d84-58f47306a7fe', '5f308ff229c8cea95f58cd921fe26f8aa0ce7e235a3b50487e46b6942b05b82c', NOW(3), '20260709072423_question_bank_course_optional', 1);
+VALUES ('b61d813e-3e88-431a-afd5-489d3b7f7fc1', '5f308ff229c8cea95f58cd921fe26f8aa0ce7e235a3b50487e46b6942b05b82c', NOW(3), '20260709072423_question_bank_course_optional', 1);
 
 -- ===== Migration: 20260709084042_question_marks_intrinsic =====
 /*
@@ -568,18 +568,18 @@ VALUES ('37d1ae29-df69-4b56-8d84-58f47306a7fe', '5f308ff229c8cea95f58cd921fe26f8
 
 */
 -- DropForeignKey
-ALTER TABLE `examsubjectmarks` DROP FOREIGN KEY `ExamSubjectMarks_examId_fkey`;
+ALTER TABLE `ExamSubjectMarks` DROP FOREIGN KEY `ExamSubjectMarks_examId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `examsubjectmarks` DROP FOREIGN KEY `ExamSubjectMarks_subjectId_fkey`;
+ALTER TABLE `ExamSubjectMarks` DROP FOREIGN KEY `ExamSubjectMarks_subjectId_fkey`;
 
 -- AlterTable
-ALTER TABLE `mcqquestion` ADD COLUMN `marks` DOUBLE NOT NULL DEFAULT 1;
+ALTER TABLE `MCQQuestion` ADD COLUMN `marks` DOUBLE NOT NULL DEFAULT 1;
 
 -- DropTable
-DROP TABLE `examsubjectmarks`;
+DROP TABLE `ExamSubjectMarks`;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('f55749e5-06d6-4b44-9c9e-555b8abd3a43', 'bbd2308ca512254da5208ff3c6aa067894239e910e84aa7f905ea083c5103e2e', NOW(3), '20260709084042_question_marks_intrinsic', 1);
+VALUES ('5b5af0df-eb8c-4db6-a4d1-4487331a3496', 'bbd2308ca512254da5208ff3c6aa067894239e910e84aa7f905ea083c5103e2e', NOW(3), '20260709084042_question_marks_intrinsic', 1);
 
 -- ===== Migration: 20260709112948_notes_multi_course_content_based =====
 /*
@@ -591,19 +591,19 @@ VALUES ('f55749e5-06d6-4b44-9c9e-555b8abd3a43', 'bbd2308ca512254da5208ff3c6aa067
 
 */
 -- DropForeignKey
-ALTER TABLE `note` DROP FOREIGN KEY `Note_courseId_fkey`;
+ALTER TABLE `Note` DROP FOREIGN KEY `Note_courseId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `note` DROP FOREIGN KEY `Note_lessonId_fkey`;
+ALTER TABLE `Note` DROP FOREIGN KEY `Note_lessonId_fkey`;
 
 -- DropIndex
-DROP INDEX `Note_courseId_fkey` ON `note`;
+DROP INDEX `Note_courseId_fkey` ON `Note`;
 
 -- DropIndex
-DROP INDEX `Note_lessonId_fkey` ON `note`;
+DROP INDEX `Note_lessonId_fkey` ON `Note`;
 
 -- AlterTable
-ALTER TABLE `note` DROP COLUMN `courseId`,
+ALTER TABLE `Note` DROP COLUMN `courseId`,
     DROP COLUMN `lessonId`,
     MODIFY `fileUrl` VARCHAR(191) NULL,
     MODIFY `content` LONGTEXT NOT NULL;
@@ -623,10 +623,10 @@ ALTER TABLE `_CourseNotes` ADD CONSTRAINT `_CourseNotes_A_fkey` FOREIGN KEY (`A`
 -- AddForeignKey
 ALTER TABLE `_CourseNotes` ADD CONSTRAINT `_CourseNotes_B_fkey` FOREIGN KEY (`B`) REFERENCES `Note`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('cfa3b5d9-3c0a-463b-a22e-c23ac5325e55', 'ced93105087a469108b6915a8bb2a1ea0875711f799b1d1bc7f01228fb24fc03', NOW(3), '20260709112948_notes_multi_course_content_based', 1);
+VALUES ('800e5437-3a7c-4bb6-a541-2d66ec1e5e08', 'ced93105087a469108b6915a8bb2a1ea0875711f799b1d1bc7f01228fb24fc03', NOW(3), '20260709112948_notes_multi_course_content_based', 1);
 
 -- ===== Migration: 20260709123815_notes_optional_content_pdf_support =====
 -- AlterTable
-ALTER TABLE `note` MODIFY `content` LONGTEXT NULL;
+ALTER TABLE `Note` MODIFY `content` LONGTEXT NULL;
 INSERT INTO `_prisma_migrations` (`id`, `checksum`, `finished_at`, `migration_name`, `applied_steps_count`)
-VALUES ('b20acd4b-2e13-448a-8143-5062abd640a8', 'e20b15b65343da3516c6e05eb9269e4f3f7f32de09e0f4383799ec13d8b66679', NOW(3), '20260709123815_notes_optional_content_pdf_support', 1);
+VALUES ('d1b54923-a25e-4efc-8775-52027b9e39a4', 'e20b15b65343da3516c6e05eb9269e4f3f7f32de09e0f4383799ec13d8b66679', NOW(3), '20260709123815_notes_optional_content_pdf_support', 1);
