@@ -10,7 +10,6 @@ import {
 import { useSession } from "next-auth/react"
 import { useRouter, usePathname } from "next/navigation"
 import { SITE_NAME } from "@/lib/site"
-import { ThemeToggle } from "@/components/ThemeToggle"
 
 const navItems = [
   { href: "/lms", label: "Overview", icon: LayoutDashboard },
@@ -118,7 +117,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <h1 className="font-bold text-slate-800 dark:text-slate-200">{SITE_NAME} — Management</h1>
           </div>
           <div className="flex items-center gap-3 text-xs font-bold text-slate-500">
-             <ThemeToggle />
              <div
                className="w-8 h-8 rounded-full flex items-center justify-center text-white"
                style={{ background: "linear-gradient(135deg, var(--admin-accent), var(--admin-accent-2))" }}

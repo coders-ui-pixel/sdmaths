@@ -59,7 +59,7 @@ export function HeroVisual() {
           <img
             src={HERO_IMAGE_SRC}
             alt="Students learning mathematics"
-            className="block w-full h-full object-cover"
+            className="block w-full h-full object-cover object-top"
             onError={() => setImageFailed(true)}
           />
         </div>

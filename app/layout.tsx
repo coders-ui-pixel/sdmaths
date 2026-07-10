@@ -49,20 +49,7 @@ export const viewport: Viewport = {
 
 import { Providers } from "@/components/Providers"
 import { Footer } from "@/components/Footer"
-import { ThemeProvider } from "@/components/ThemeProvider"
 import { PopupNoticeDisplay } from "@/components/PopupNoticeDisplay"
-
-const THEME_INIT_SCRIPT = `
-(function() {
-  try {
-    var stored = localStorage.getItem("theme");
-    var theme = stored === "light" || stored === "dark"
-      ? stored
-      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", theme);
-  } catch (e) {}
-})();
-`
 
 export default async function RootLayout({
   children,
@@ -73,23 +60,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-      </head>
       <body className={inter.className}>
-        <ThemeProvider>
-          <Providers>
-            <BrandingProvider data={branding}>
-              <div className="layout-wrapper min-h-screen flex flex-col">
-                <main className="flex-1">
-                  {children}
-                </main>
-                <Footer />
-                <PopupNoticeDisplay />
-              </div>
-            </BrandingProvider>
-          </Providers>
-        </ThemeProvider>
+        <Providers>
+          <BrandingProvider data={branding}>
+            <div className="layout-wrapper min-h-screen flex flex-col">
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+              <PopupNoticeDisplay />
+            </div>
+          </BrandingProvider>
+        </Providers>
       </body>
     </html>
   )

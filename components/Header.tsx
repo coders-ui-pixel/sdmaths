@@ -8,7 +8,6 @@ import { Menu, X, User, LogIn, LogOut, LayoutDashboard } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { NotificationBell } from "./NotificationBell"
-import { ThemeToggle } from "./ThemeToggle"
 
 export const Header = () => {
   const { siteName, logoUrl } = useBranding()
@@ -127,7 +126,6 @@ export const Header = () => {
 
         {/* Right Actions */}
         <div className="flex items-center gap-3 shrink-0">
-          <ThemeToggle />
           {session ? (
             <div className="hidden md:flex items-center gap-3">
               {(session.user as any)?.role === "ADMIN" ? (
@@ -250,10 +248,6 @@ export const Header = () => {
               {label}
             </Link>
           ))}
-          <div className="flex items-center justify-between py-3 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Appearance</span>
-            <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
-          </div>
           <div className="pt-3">
             {session ? (
               <div className="flex flex-col gap-2">
