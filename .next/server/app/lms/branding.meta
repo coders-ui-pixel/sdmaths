@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/lms/layout,_N_T_/lms/branding/layout,_N_T_/lms/branding/page,_N_T_/lms/branding"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/lms/branding/__PAGE__",
+    "/lms/branding",
+    "/lms",
+    "/_index",
+    "/_head"
+  ]
+}

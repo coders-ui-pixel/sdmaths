@@ -1,0 +1,3 @@
+{
+  "/lms/exams/[id]/print/page": "app/lms/exams/[id]/print/page.js"
+}

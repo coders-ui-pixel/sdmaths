@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/lms/layout,_N_T_/lms/live-exams/layout,_N_T_/lms/live-exams/page,_N_T_/lms/live-exams"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/lms/live-exams/__PAGE__",
+    "/lms/live-exams",
+    "/lms",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -1,0 +1,22 @@
+User-Agent: *
+Allow: /
+Disallow: /lms/
+Disallow: /api/
+Disallow: /dashboard/
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+Sitemap: http://localhost:3000/sitemap.xml

@@ -1,0 +1,3 @@
+{
+  "/api/admin/exams/[id]/questions/route": "app/api/admin/exams/[id]/questions/route.js"
+}
