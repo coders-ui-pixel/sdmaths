@@ -176,7 +176,7 @@ export default function AdminExamsPage() {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" disabled={isSubmitting} className="btn-admin-primary flex-1">
                   {isSubmitting ? <Loader2 className="animate-spin" /> : "Create"}
                 </button>

@@ -68,7 +68,7 @@ export function DraftRowEditor({ draft, onChange, onRemove }: {
                 type="button"
                 onClick={() => onChange({ correctOption: idx })}
                 className={`absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
-                  draft.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent"
+                  draft.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent hover:bg-slate-300 dark:hover:bg-slate-600"
                 }`}
                 title="Mark as correct"
               >

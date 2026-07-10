@@ -228,7 +228,7 @@ export const Header = () => {
           <button
             onClick={() => setMobileOpen(v => !v)}
             aria-label="Toggle menu"
-            className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0"
+            className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 shrink-0 transition-colors"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -262,7 +262,7 @@ export const Header = () => {
                 )}
                 <button
                   onClick={() => { signOut(); setMobileOpen(false) }}
-                  className="flex items-center gap-2 font-semibold text-red-500"
+                  className="flex items-center gap-2 font-semibold text-red-500 hover:text-red-600"
                 >
                   <LogOut size={16} /> Logout
                 </button>

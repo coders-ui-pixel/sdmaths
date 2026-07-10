@@ -262,7 +262,7 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
           <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold outfit">Add Video to Playlist</h3>
-              <button onClick={() => setIsModalOpen(false)}><X /></button>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600"><X /></button>
             </div>
             
             <form onSubmit={handleAddLesson} className="space-y-6">
@@ -331,7 +331,7 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
               </label>
 
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" disabled={saving} className="btn-admin-primary flex-1">
                   {saving ? <Loader2 className="animate-spin" /> : "Save Video"}
                 </button>

@@ -239,7 +239,7 @@ export default function MCQExamPage({ params }: { params: Promise<{ slug: string
               <button
                 onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
                 disabled={currentQuestion === 0}
-                className="px-4 py-2.5 rounded-xl text-xs font-black border border-slate-200 dark:border-slate-800 text-slate-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-4 py-2.5 rounded-xl text-xs font-black border border-slate-200 dark:border-slate-800 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent flex items-center gap-1 transition-colors"
               >
                 <ChevronLeft size={14} /> Previous
               </button>

@@ -175,7 +175,7 @@ export default function AdminCoursesPage() {
           <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] w-full max-w-2xl p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold outfit">Create New Course</h3>
-              <button onClick={() => setIsModalOpen(false)}><X /></button>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600"><X /></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -294,7 +294,7 @@ export default function AdminCoursesPage() {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" className="btn-admin-primary flex-1">Create Course</button>
               </div>
             </form>

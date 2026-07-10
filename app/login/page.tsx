@@ -211,7 +211,7 @@ export default function LoginPage() {
                 <button
                   onClick={() => setTab("email")}
                   className={`flex-1 py-2 px-4 rounded-md font-medium text-sm transition-all ${
-                    tab === "email" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--primary)]" : "text-slate-500"
+                    tab === "email" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--primary)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
                   }`}
                 >
                   <span className="flex items-center justify-center gap-2"><Mail size={16}/> Email</span>
@@ -219,7 +219,7 @@ export default function LoginPage() {
                 <button
                   onClick={() => { setTab("otp"); setStep("phone") }}
                   className={`flex-1 py-2 px-4 rounded-md font-medium text-sm transition-all ${
-                    tab === "otp" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--primary)]" : "text-slate-500"
+                    tab === "otp" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--primary)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
                   }`}
                 >
                   <span className="flex items-center justify-center gap-2"><Phone size={16}/> Phone OTP</span>

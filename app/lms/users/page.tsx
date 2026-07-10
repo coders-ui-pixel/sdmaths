@@ -298,7 +298,7 @@ export default function AdminUsersPage() {
                 <button 
                   type="submit"
                   disabled={creating}
-                  className="flex-1 py-3.5 rounded-2xl font-bold transition-all text-sm flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+                  className="flex-1 py-3.5 rounded-2xl font-bold transition-all text-sm flex items-center justify-center gap-2 shadow-lg hover:opacity-90 disabled:opacity-50"
                   style={{ backgroundColor: "#2563eb", color: "#ffffff", border: "none" }}
                 >
                   {creating ? <Loader2 className="animate-spin" size={16} /> : "Create Admin"}

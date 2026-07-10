@@ -479,7 +479,7 @@ export default function ManageQuestionsPage({ params }: { params: Promise<{ id: 
           Upload CSV
           <input type="file" className="hidden" accept=".csv" onChange={handleCsvUpload} />
         </label>
-        <button onClick={() => setIsManualModalOpen(true)} className="px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold flex items-center gap-2 shadow-sm">
+        <button onClick={() => setIsManualModalOpen(true)} className="px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold flex items-center gap-2 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
           <Plus size={18} /> Add Manual
         </button>
       </div>
@@ -547,7 +547,7 @@ export default function ManageQuestionsPage({ params }: { params: Promise<{ id: 
           ))}
 
           <div className="flex gap-3 sticky bottom-0 bg-white dark:bg-slate-950 py-4 border-t border-slate-100 dark:border-slate-800">
-            <button onClick={() => setDrafts(null)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">
+            <button onClick={() => setDrafts(null)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
               Cancel
             </button>
             <button
@@ -662,10 +662,10 @@ export default function ManageQuestionsPage({ params }: { params: Promise<{ id: 
             </div>
 
             <div className="flex gap-2 mb-6 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl w-fit">
-              <button onClick={() => setPickerTab("manual")} className={`px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${pickerTab === "manual" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500"}`}>
+              <button onClick={() => setPickerTab("manual")} className={`px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${pickerTab === "manual" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}>
                 <ListChecks size={14} /> Pick Manually
               </button>
-              <button onClick={() => setPickerTab("random")} className={`px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${pickerTab === "random" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500"}`}>
+              <button onClick={() => setPickerTab("random")} className={`px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${pickerTab === "random" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}>
                 <Shuffle size={14} /> Auto-Random
               </button>
             </div>
@@ -837,7 +837,7 @@ export default function ManageQuestionsPage({ params }: { params: Promise<{ id: 
                         type="button"
                         onClick={() => setManualFormData({...manualFormData, correctOption: idx})}
                         className={`absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
-                          manualFormData.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent"
+                          manualFormData.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent hover:bg-slate-300 dark:hover:bg-slate-600"
                         }`}
                       >
                         <CheckCircle2 size={14} />
@@ -873,7 +873,7 @@ export default function ManageQuestionsPage({ params }: { params: Promise<{ id: 
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsManualModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsManualModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" className="btn-admin-primary flex-1">Add Question</button>
               </div>
             </form>
@@ -973,10 +973,10 @@ function RandomWizard({
       <p className="text-sm text-slate-500">Pick subjects and how many 1-mark / 2-mark questions to randomly grab from each — processed one subject at a time so you can watch it build.</p>
 
       <div className="flex gap-2 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl w-fit">
-        <button onClick={() => setWizardMode("subjects")} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${wizardMode === "subjects" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500"}`}>
+        <button onClick={() => setWizardMode("subjects")} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${wizardMode === "subjects" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}>
           Specific Subjects
         </button>
-        <button onClick={() => setWizardMode("all")} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${wizardMode === "all" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500"}`}>
+        <button onClick={() => setWizardMode("all")} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${wizardMode === "all" ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}>
           All Subjects Combined
         </button>
       </div>

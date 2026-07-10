@@ -219,7 +219,7 @@ export default function NotesAdminPage() {
                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-bold transition-all ${
                       noteType === "content"
                         ? "border-[var(--admin-accent)] bg-[var(--admin-accent)]/10 text-[var(--admin-accent)]"
-                        : "border-slate-200 dark:border-slate-700 text-slate-500"
+                        : "border-slate-200 dark:border-slate-700 text-slate-500 hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-700 dark:hover:text-slate-300"
                     }`}
                   >
                     <Type size={14} /> Written Content
@@ -230,7 +230,7 @@ export default function NotesAdminPage() {
                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-bold transition-all ${
                       noteType === "pdf"
                         ? "border-[var(--admin-accent)] bg-[var(--admin-accent)]/10 text-[var(--admin-accent)]"
-                        : "border-slate-200 dark:border-slate-700 text-slate-500"
+                        : "border-slate-200 dark:border-slate-700 text-slate-500 hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-700 dark:hover:text-slate-300"
                     }`}
                   >
                     <File size={14} /> Upload PDF
@@ -257,7 +257,7 @@ export default function NotesAdminPage() {
                         <File size={18} className="text-red-500 shrink-0" />
                         <span className="text-sm font-semibold truncate">{formData.fileUrl.split("/").pop()}</span>
                       </div>
-                      <button type="button" onClick={() => setFormData(p => ({ ...p, fileUrl: "" }))} className="text-xs font-bold text-red-500 shrink-0">Remove</button>
+                      <button type="button" onClick={() => setFormData(p => ({ ...p, fileUrl: "" }))} className="text-xs font-bold text-red-500 hover:text-red-600 shrink-0">Remove</button>
                     </div>
                   ) : (
                     <label className="flex flex-col items-center justify-center gap-2 p-8 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 cursor-pointer hover:border-[var(--admin-accent)] transition-all text-center">
@@ -307,7 +307,7 @@ export default function NotesAdminPage() {
               </div>
 
               <div className="flex gap-3 pt-2">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" disabled={saving || uploading} className="btn-admin-primary flex-1 disabled:opacity-50">
                   {saving ? <Loader2 className="animate-spin mx-auto" size={18} /> : editingId ? "Save Changes" : "Create Note"}
                 </button>

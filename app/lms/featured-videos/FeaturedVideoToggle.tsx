@@ -33,7 +33,7 @@ export function FeaturedVideoToggle({ lessonId, initialStatus, disabled }: { les
       onClick={toggle}
       disabled={disabled || loading}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        disabled ? "bg-slate-200 cursor-not-allowed" : isFeatured ? "bg-[var(--admin-accent)]" : "bg-slate-300"
+        disabled ? "bg-slate-200 cursor-not-allowed" : isFeatured ? "bg-[var(--admin-accent)] hover:opacity-90" : "bg-slate-300 hover:bg-slate-400"
       }`}
     >
       <span

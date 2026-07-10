@@ -277,7 +277,7 @@ function QuestionBankPageInner() {
           ))}
 
           <div className="flex gap-3 sticky bottom-0 bg-white dark:bg-slate-950 py-4 border-t border-slate-100 dark:border-slate-800">
-            <button onClick={() => setDrafts(null)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">
+            <button onClick={() => setDrafts(null)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
               Cancel
             </button>
             <button
@@ -347,7 +347,7 @@ function QuestionBankPageInner() {
               <button onClick={downloadTemplate} className="btn-admin-secondary flex items-center gap-2">
                 <Download size={16} /> Download CSV Template
               </button>
-              <button onClick={() => setIsManualModalOpen(true)} className="text-sm font-bold text-[var(--admin-accent)] flex items-center gap-1.5">
+              <button onClick={() => setIsManualModalOpen(true)} className="text-sm font-bold text-[var(--admin-accent)] hover:opacity-75 transition-opacity flex items-center gap-1.5">
                 <Plus size={16} /> Or add one question manually
               </button>
             </div>
@@ -521,7 +521,7 @@ function QuestionBankPageInner() {
                         type="button"
                         onClick={() => setManualFormData({ ...manualFormData, correctOption: idx })}
                         className={`absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
-                          manualFormData.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent"
+                          manualFormData.correctOption === idx ? "bg-green-500 text-white" : "bg-slate-200 dark:bg-slate-700 text-transparent hover:bg-slate-300 dark:hover:bg-slate-600"
                         }`}
                       >
                         <CheckCircle2 size={14} />
@@ -553,7 +553,7 @@ function QuestionBankPageInner() {
                 />
               </div>
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsManualModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsManualModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" className="btn-admin-primary flex-1">Add to Bank</button>
               </div>
             </form>

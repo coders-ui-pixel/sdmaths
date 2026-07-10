@@ -606,7 +606,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                       setNewVideoAnswerUrl("")
                       setIsVvi(false)
                     }} 
-                    className="flex-1 py-3 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold"
+                    className="flex-1 py-3 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                   >
                     Cancel Edit
                   </button>
@@ -743,7 +743,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                     <button
                       type="button"
                       onClick={() => { setCourse({ ...course, paymentQrUrl: null }); toast.success("QR removed — click Save Changes to apply") }}
-                      className="p-2.5 bg-white text-red-600 rounded-xl shadow-xl"
+                      className="p-2.5 bg-white text-red-600 rounded-xl shadow-xl hover:bg-red-50 transition-colors"
                       title="Remove QR"
                     >
                       <Trash2 size={14} />

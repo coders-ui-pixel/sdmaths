@@ -430,7 +430,7 @@ export default function BlogsAdminPage() {
                     type="button"
                     onClick={() => setFormData({ ...formData, published: !formData.published })}
                     className={`w-10 h-6 rounded-full transition-colors relative focus:outline-none flex items-center ${
-                      formData.published ? "bg-green-600" : "bg-slate-300 dark:bg-slate-800"
+                      formData.published ? "bg-green-600 hover:bg-green-700" : "bg-slate-300 dark:bg-slate-800 hover:bg-slate-400 dark:hover:bg-slate-700"
                     }`}
                   >
                     <span className={`w-4 h-4 bg-white rounded-full transition-transform absolute shadow ${

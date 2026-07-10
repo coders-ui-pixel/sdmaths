@@ -161,7 +161,7 @@ export default function SyllabusAdminPage() {
                 />
               </div>
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold">Cancel</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-4 border border-slate-200 dark:border-slate-800 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
                 <button type="submit" disabled={saving} className="btn-admin-primary flex-1 disabled:opacity-50">
                   {saving ? <Loader2 className="animate-spin mx-auto" size={18} /> : editingId ? "Save Changes" : "Add Section"}
                 </button>

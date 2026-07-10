@@ -75,7 +75,7 @@ export function PopupNoticeDisplay() {
             )}
             <button
               onClick={dismiss}
-              className={`${notice.linkUrl ? "flex-1" : "w-full"} py-3 rounded-xl font-bold text-sm border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300`}
+              className={`${notice.linkUrl ? "flex-1" : "w-full"} py-3 rounded-xl font-bold text-sm border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors`}
             >
               Dismiss
             </button>

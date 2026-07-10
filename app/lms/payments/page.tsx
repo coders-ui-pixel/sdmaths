@@ -73,7 +73,7 @@ export default function AdminPaymentsPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
-              filter === f ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500"
+              filter === f ? "bg-white dark:bg-slate-700 shadow-sm text-[var(--admin-accent)]" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
             }`}
           >
             {f}
