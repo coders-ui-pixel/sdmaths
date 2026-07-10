@@ -203,7 +203,7 @@ export default function DashboardOverviewClient({ initialData }: DashboardOvervi
                     <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">{p.course.title}</td>
                     <td className="px-6 py-4 font-bold text-slate-800 dark:text-slate-100">Rs. {p.amount.toLocaleString()}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${statusColors[p.status] || "bg-slate-100 text-slate-700"}`}>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${statusColors[p.status] || "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"}`}>
                         {p.status}
                       </span>
                     </td>

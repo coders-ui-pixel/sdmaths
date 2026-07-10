@@ -406,7 +406,7 @@ export default function ClassroomPage() {
                           {/* Proof Screenshot */}
                           <td className="px-6 py-5">
                             {item.proofUrl ? (
-                              <div className="relative group w-16 h-12 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 flex items-center justify-center shadow-sm">
+                              <div className="relative group w-16 h-12 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center shadow-sm">
                                 <img
                                   src={item.proofUrl}
                                   alt="Receipt proof thumbnail"
