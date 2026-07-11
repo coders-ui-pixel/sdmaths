@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json()
-    const { courseId, proofUrl, paymentId, name, phone } = body
+    const { courseId, proofUrl, paymentId, name, phone, college } = body
 
     const course = await prisma.course.findUnique({ where: { id: courseId } })
     if (!course) {
@@ -31,15 +31,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Already registered for this course" }, { status: 400 })
     }
 
-    if (course.price === 0) {
-      if (!name || !phone) {
-        return NextResponse.json({ error: "Name and phone number are required" }, { status: 400 })
+    // A course is free at checkout either because its base price is 0, or because
+    // an active promo discount brings the effective price down to 0 — mirrors the
+    // same isPromoActive/displayPrice computation used on the checkout page.
+    const verifiedPaymentsCount = await prisma.payment.count({ where: { courseId, status: "VERIFIED" } })
+    const isPromoActive = course.discountAmount > 0 && course.discountLimit > 0 && verifiedPaymentsCount < course.discountLimit
+    const displayPrice = isPromoActive ? course.price - course.discountAmount : course.price
+
+    if (displayPrice === 0) {
+      if (!name || !phone || !college) {
+        return NextResponse.json({ error: "Name, phone number, and college are required" }, { status: 400 })
       }
 
       const [, payment] = await prisma.$transaction([
         prisma.user.update({
           where: { id: session.user.id },
-          data: { name, phone }
+          data: { name, phone, college }
         }),
         prisma.payment.create({
           data: {
@@ -64,7 +71,7 @@ export async function POST(req: Request) {
         courseId,
         proofUrl,
         paymentId,
-        amount: course.price,
+        amount: displayPrice,
         status: "PENDING"
       }
     })
@@ -92,7 +99,7 @@ export async function GET(req: Request) {
 
     const payments = await prisma.payment.findMany({
       include: {
-        user: { select: { id: true, name: true, email: true, phone: true, image: true } },
+        user: { select: { id: true, name: true, email: true, phone: true, college: true, image: true } },
         course: { select: { id: true, title: true, slug: true } }
       },
       orderBy: { createdAt: "desc" }

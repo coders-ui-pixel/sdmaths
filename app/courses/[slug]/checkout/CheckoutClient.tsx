@@ -26,13 +26,16 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
 
   const [name, setName] = useState(userName)
   const [phone, setPhone] = useState("")
+  const [college, setCollege] = useState("")
   const [paymentId, setPaymentId] = useState("")
   const [proofFile, setProofFile] = useState<File | null>(null)
 
+  const isFreeCheckout = course.displayPrice === 0
+
   const handleFreeCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!name.trim() || !phone.trim()) {
-      toast.error("Please fill in your name and phone number")
+    if (!name.trim() || !phone.trim() || !college.trim()) {
+      toast.error("Please fill in your name, phone number, and college")
       return
     }
     setSubmitting(true)
@@ -40,7 +43,7 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
       const res = await fetch("/api/payments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseId: course.id, name: name.trim(), phone: phone.trim() })
+        body: JSON.stringify({ courseId: course.id, name: name.trim(), phone: phone.trim(), college: college.trim() })
       })
       if (!res.ok) {
         const error = await res.json()
@@ -138,7 +141,7 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
       <div className="grid lg:grid-cols-[1fr_380px] gap-6 sm:gap-8">
         {/* Left: payment / registration form */}
         <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm p-5 sm:p-6 md:p-8 order-2 lg:order-1">
-          {course.isFree ? (
+          {isFreeCheckout ? (
             <form onSubmit={handleFreeCheckout} className="space-y-5">
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles size={16} className="text-emerald-500" />
@@ -168,8 +171,19 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
                   className="w-full px-5 py-4 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:border-[var(--primary)] font-bold text-sm !text-black dark:!text-white"
                 />
               </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">College</label>
+                <input
+                  type="text"
+                  required
+                  value={college}
+                  onChange={e => setCollege(e.target.value)}
+                  placeholder="Your college/school name"
+                  className="w-full px-5 py-4 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:border-[var(--primary)] font-bold text-sm !text-black dark:!text-white"
+                />
+              </div>
 
-              <button type="submit" disabled={!name.trim() || !phone.trim() || submitting} className="btn-primary w-full !py-4">
+              <button type="submit" disabled={!name.trim() || !phone.trim() || !college.trim() || submitting} className="btn-primary w-full !py-4">
                 {submitting ? <Loader2 size={18} className="animate-spin" /> : "Checkout — Rs. 0"}
               </button>
             </form>
@@ -273,13 +287,13 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
             <div className="flex items-center justify-between mb-6">
               <span className="font-bold text-slate-800 dark:text-slate-100">Total</span>
               <span className="text-2xl font-black text-[var(--primary)]">
-                {course.isFree ? "Rs. 0" : `Rs. ${course.displayPrice.toLocaleString()}`}
+                Rs. {course.displayPrice.toLocaleString()}
               </span>
             </div>
 
             <div className="flex items-start gap-2 text-xs text-slate-400 leading-relaxed">
               <ShieldCheck size={28} className="shrink-0 text-emerald-500" />
-              <span>{course.isFree ? "Instant access — no payment required." : "After checkout, an admin verifies your payment before access is granted."}</span>
+              <span>{isFreeCheckout ? "Instant access — no payment required." : "After checkout, an admin verifies your payment before access is granted."}</span>
             </div>
           </div>
         </div>

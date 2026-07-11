@@ -10,7 +10,7 @@ type Payment = {
   proofUrl: string
   status: "PENDING" | "VERIFIED" | "REJECTED"
   createdAt: string
-  user: { name: string; email: string; phone: string | null }
+  user: { name: string; email: string; phone: string | null; college: string | null }
   course: { title: string }
 }
 
@@ -108,6 +108,7 @@ export default function AdminPaymentsPage() {
                       <div className="font-bold text-slate-800 dark:text-slate-100 truncate">{p.user.name || "—"}</div>
                       <div className="text-slate-400 text-xs truncate">{p.user.email}</div>
                       {p.user.phone && <div className="text-slate-400 text-xs">{p.user.phone}</div>}
+                      {p.user.college && <div className="text-slate-400 text-xs">{p.user.college}</div>}
                     </div>
                     <span className={`shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${config.className}`}>
                       <config.icon size={12} />
@@ -182,6 +183,7 @@ export default function AdminPaymentsPage() {
                           <div className="font-medium">{p.user.name || "—"}</div>
                           <div className="text-slate-400 text-xs">{p.user.email}</div>
                           {p.user.phone && <div className="text-slate-400 text-xs">{p.user.phone}</div>}
+                      {p.user.college && <div className="text-slate-400 text-xs">{p.user.college}</div>}
                         </td>
                         <td className="px-6 py-4 font-medium">{p.course.title}</td>
                         <td className="px-6 py-4 font-bold whitespace-nowrap">Rs. {p.amount.toLocaleString()}</td>

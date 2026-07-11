@@ -8,8 +8,9 @@ import { Eye, EyeOff } from "lucide-react"
 import { SITE_NAME } from "@/lib/site"
 
 export default function RegisterPage() {
-  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
+  const [college, setCollege] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -20,12 +21,12 @@ export default function RegisterPage() {
     e.preventDefault()
     setLoading(true)
     setError("")
-    
+
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ phone, email, college, password }),
       })
       
       const data = await res.json()
@@ -69,12 +70,12 @@ export default function RegisterPage() {
         <div className="card p-8">
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <label className="block text-sm font-medium mb-1">Phone Number</label>
               <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="John Doe"
+                type="tel"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+                placeholder="98XXXXXXXX"
                 className="w-full px-4 py-2 border border-[var(--border)] rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 required
               />
@@ -91,7 +92,18 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Password</label>
+              <label className="block text-sm font-medium mb-1">College</label>
+              <input
+                type="text"
+                value={college}
+                onChange={e => setCollege(e.target.value)}
+                placeholder="Your college/school name"
+                className="w-full px-4 py-2 border border-[var(--border)] rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Create Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
