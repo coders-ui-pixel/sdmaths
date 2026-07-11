@@ -120,24 +120,24 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
   }
 
   return (
-    <div className="container max-w-4xl mx-auto px-6 pt-28 md:pt-32 pb-20">
-      <Link href={`/courses/${course.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--primary)] transition-colors mb-6">
+    <div className="container max-w-4xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20">
+      <Link href={`/courses/${course.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--primary)] transition-colors mb-5 sm:mb-6">
         <ArrowLeft size={16} /> Back to course
       </Link>
 
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-11 h-11 rounded-2xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
+      <div className="flex items-center gap-3 mb-6 sm:mb-8">
+        <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center shrink-0">
           <ShoppingCart size={20} />
         </div>
-        <div>
-          <h1 className="text-2xl md:text-3xl font-black outfit text-slate-900 dark:text-white">Checkout</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Review your order and complete enrollment.</p>
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black outfit text-slate-900 dark:text-white">Checkout</h1>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Review your order and complete enrollment.</p>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_380px] gap-8">
+      <div className="grid lg:grid-cols-[1fr_380px] gap-6 sm:gap-8">
         {/* Left: payment / registration form */}
-        <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm p-6 md:p-8 order-2 lg:order-1">
+        <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm p-5 sm:p-6 md:p-8 order-2 lg:order-1">
           {course.isFree ? (
             <form onSubmit={handleFreeCheckout} className="space-y-5">
               <div className="flex items-center gap-2 mb-2">
@@ -174,21 +174,26 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
               </button>
             </form>
           ) : (
-            <form onSubmit={handlePaidCheckout} className="space-y-6">
+            <form onSubmit={handlePaidCheckout} className="space-y-6 sm:space-y-7">
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="w-5 h-5 rounded-full bg-[var(--primary)] text-white text-[10px] font-black flex items-center justify-center">1</span>
+                  <span className="w-5 h-5 rounded-full bg-[var(--primary)] text-white text-[10px] font-black flex items-center justify-center shrink-0">1</span>
                   <p className="text-xs font-black uppercase tracking-widest text-slate-400">Scan & Pay</p>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 sm:p-6 text-center">
+                <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 sm:p-6 text-center">
                   {course.paymentQrUrl ? (
-                    <div className="w-40 h-40 sm:w-48 sm:h-48 bg-white rounded-2xl mx-auto flex items-center justify-center p-3 shadow-sm mb-3">
+                    <div className="w-36 h-36 sm:w-48 sm:h-48 bg-white rounded-2xl mx-auto flex items-center justify-center p-3 shadow-sm mb-4">
                       <img src={course.paymentQrUrl} alt="Payment QR" className="max-w-full max-h-full object-contain" />
                     </div>
                   ) : (
-                    <div className="w-40 h-40 sm:w-48 sm:h-48 bg-slate-100 dark:bg-slate-700 rounded-2xl mx-auto flex flex-col items-center justify-center p-6 mb-3">
-                      <AlertCircle className="text-slate-300 dark:text-slate-600 mb-2" />
-                      <span className="text-[10px] text-slate-400">QR not available — contact support</span>
+                    <div className="rounded-2xl border-2 border-dashed border-amber-300 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-950/20 p-6 sm:p-8 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-500 flex items-center justify-center mx-auto mb-3">
+                        <AlertCircle size={22} />
+                      </div>
+                      <p className="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">QR code not available yet</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto">
+                        The instructor hasn't uploaded a payment QR for this course. Please contact support before proceeding.
+                      </p>
                     </div>
                   )}
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">eSewa / Khalti / ConnectIPS</p>
@@ -197,7 +202,7 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
 
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="w-5 h-5 rounded-full bg-[var(--primary)] text-white text-[10px] font-black flex items-center justify-center">2</span>
+                  <span className="w-5 h-5 rounded-full bg-[var(--primary)] text-white text-[10px] font-black flex items-center justify-center shrink-0">2</span>
                   <p className="text-xs font-black uppercase tracking-widest text-slate-400">Submit Verification</p>
                 </div>
                 <div className="space-y-4">
@@ -209,16 +214,16 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
                       value={paymentId}
                       onChange={e => setPaymentId(e.target.value)}
                       placeholder="Enter 10-12 digit ID"
-                      className="w-full px-5 py-4 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:border-[var(--primary)] font-bold text-sm !text-black dark:!text-white"
+                      className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:border-[var(--primary)] font-bold text-sm !text-black dark:!text-white"
                     />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Payment Screenshot</label>
-                    <label className={`block border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
-                      proofFile ? "border-green-500 bg-green-50/50 dark:bg-green-500/10" : "border-slate-200 dark:border-slate-800 hover:border-[var(--primary)]"
+                    <label className={`block border-2 border-dashed rounded-xl p-5 sm:p-6 text-center cursor-pointer transition-all ${
+                      proofFile ? "border-green-500 bg-green-50/50 dark:bg-green-500/10" : "border-slate-200 dark:border-slate-800 hover:border-[var(--primary)] hover:bg-slate-50 dark:hover:bg-slate-800/40"
                     }`}>
                       <Upload size={20} className={`mx-auto mb-2 ${proofFile ? "text-green-500" : "text-slate-400"}`} />
-                      <span className="text-xs font-bold text-slate-500 block truncate px-2">
+                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block truncate px-2">
                         {proofFile ? proofFile.name : "Click to select image"}
                       </span>
                       <input type="file" accept="image/*" className="hidden" onChange={e => setProofFile(e.target.files?.[0] || null)} />
@@ -227,7 +232,7 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
                 </div>
               </div>
 
-              <button type="submit" disabled={!proofFile || !paymentId.trim() || submitting} className="btn-primary w-full !py-4">
+              <button type="submit" disabled={!proofFile || !paymentId.trim() || submitting} className="btn-primary w-full !py-3.5 sm:!py-4">
                 {submitting ? <Loader2 size={18} className="animate-spin" /> : `Checkout — Rs. ${course.displayPrice.toLocaleString()}`}
               </button>
             </form>
@@ -236,13 +241,13 @@ export function CheckoutClient({ course, alreadyPending, userName }: { course: C
 
         {/* Right: order summary */}
         <div className="order-1 lg:order-2">
-          <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm p-6 sticky top-24">
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm p-5 sm:p-6 lg:sticky lg:top-24">
             <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Order Summary</h2>
             <div className="flex items-center gap-3 mb-5 pb-5 border-b border-slate-100 dark:border-slate-800">
               {course.thumbnail ? (
-                <img src={course.thumbnail} alt={course.title} className="w-16 h-16 rounded-xl object-cover shrink-0" />
+                <img src={course.thumbnail} alt={course.title} className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover shrink-0" />
               ) : (
-                <div className="w-16 h-16 rounded-xl shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)" }}>
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)" }}>
                   <BookOpen size={22} className="text-white/80" />
                 </div>
               )}
