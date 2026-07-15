@@ -12,7 +12,7 @@ import { auth } from "@/auth"
 // routing static asset requests through Node too. Locally, both default to the
 // app's own public/uploads folder + relative URLs so dev works with no setup.
 const ASSET_BASE_URL = process.env.ASSET_BASE_URL || ""
-const UPLOAD_DIR = process.env.UPLOAD_DIR || join(process.cwd(), "public", "uploads")
+const UPLOAD_DIR =  join(process.cwd(), "public", "uploads")
 
 export async function POST(req: Request) {
   try {
