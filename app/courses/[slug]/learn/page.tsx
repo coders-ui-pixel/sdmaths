@@ -131,7 +131,7 @@ export default async function LearnPage({
       {/* Video Player Placeholder */}
       <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center relative border border-blue-500/20 shadow-blue-500/5">
         {activeLesson.videoUrl ? (
-          <VideoPlayerClient lessonId={activeLesson.id} videoUrl={activeLesson.videoUrl} />
+          <VideoPlayerClient key={activeLesson.id} lessonId={activeLesson.id} videoUrl={activeLesson.videoUrl} />
         ) : (
           <div className="text-center text-white/50">
             <PlayCircle size={64} className="mx-auto mb-4 opacity-30 text-[var(--primary)] animate-pulse" />
