@@ -1,24 +1,25 @@
 import { NextResponse } from "next/server"
-import { writeFile, mkdir } from "fs/promises"
-import { join } from "path"
+import { BlobServiceClient } from "@azure/storage-blob"
 import { auth } from "@/auth"
 
-// ─── Asset CDN ─────────────────────────────────────────────────────────────
-// Uploaded files are served from a separate domain/subdomain (Apache serving
-// static files directly) rather than through the Next.js app, so large video
-// uploads don't burn Node/Passenger resources. UPLOAD_DIR must point OUTSIDE
-// the app's own folder — if it's nested inside the Passenger app root, cPanel's
-// Passenger .htaccess (which applies by filesystem path, not by domain) ends up
-// routing static asset requests through Node too. Locally, both default to the
-// app's own public/uploads folder + relative URLs so dev works with no setup.
-const ASSET_BASE_URL = process.env.ASSET_BASE_URL || ""
-const UPLOAD_DIR =  join(process.cwd(), "public", "uploads")
+// ─── Azure Blob Storage ────────────────────────────────────────────────────
+// All uploads (images, videos, PDFs) go straight to Azure Blob Storage rather
+// than the app server's own disk — sidesteps cPanel disk quotas entirely and
+// avoids the Passenger .htaccess / subdomain complexity local-disk storage
+// needed. The container must have public (anonymous) read access on blobs
+// for the returned URLs to be viewable without a SAS token.
+const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING
+const AZURE_STORAGE_CONTAINER_NAME = process.env.AZURE_STORAGE_CONTAINER_NAME || "uploads"
 
 export async function POST(req: Request) {
   try {
     const session = await auth()
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    if (!AZURE_STORAGE_CONNECTION_STRING) {
+      return NextResponse.json({ error: "Azure storage is not configured (AZURE_STORAGE_CONNECTION_STRING missing)" }, { status: 500 })
     }
 
     const formData = await req.formData()
@@ -46,13 +47,13 @@ export async function POST(req: Request) {
     // Size validation: Video up to 2GB, other files up to 25MB
     const maxVideoSize = 2 * 1024 * 1024 * 1024 // 2 GB
     const maxNormalSize = 25 * 1024 * 1024 // 25 MB
-    
+
     const isVideo = file.type.startsWith("video/")
     const sizeLimit = isVideo ? maxVideoSize : maxNormalSize
-    
+
     if (file.size > sizeLimit) {
-      const errorMsg = isVideo 
-        ? "Video file too large (max 2GB)" 
+      const errorMsg = isVideo
+        ? "Video file too large (max 2GB)"
         : "File too large (max 25MB)"
       return NextResponse.json({ error: errorMsg }, { status: 400 })
     }
@@ -64,25 +65,15 @@ export async function POST(req: Request) {
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "-")
     const filename = `${Date.now()}-${sanitizedName}`
 
-    try {
-      await mkdir(UPLOAD_DIR, { recursive: true })
-    } catch (e) {
-      // Ignore if dir exists
-    }
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING)
+    const containerClient = blobServiceClient.getContainerClient(AZURE_STORAGE_CONTAINER_NAME)
+    const blockBlobClient = containerClient.getBlockBlobClient(filename)
 
-    try {
-      const path = join(UPLOAD_DIR, filename)
-      await writeFile(path, buffer)
-      console.log("File saved to:", path)
-    } catch (writeError: any) {
-      console.error("Write file error:", writeError)
-      return NextResponse.json({ error: `File system error: ${writeError.message}` }, { status: 500 })
-    }
+    await blockBlobClient.uploadData(buffer, {
+      blobHTTPHeaders: { blobContentType: file.type }
+    })
 
-    // ASSET_BASE_URL unset (local dev) → relative URL served by Next's own public/ folder.
-    // ASSET_BASE_URL set (production) → absolute URL served by the separate static-file domain.
-    const url = ASSET_BASE_URL ? `${ASSET_BASE_URL}/uploads/${filename}` : `/uploads/${filename}`
-    return NextResponse.json({ url })
+    return NextResponse.json({ url: blockBlobClient.url })
   } catch (error) {
     console.error("CRITICAL UPLOAD ERROR:", error)
     return NextResponse.json({ error: (error as Error).message || "Failed to upload file" }, { status: 500 })

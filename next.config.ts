@@ -31,6 +31,7 @@ typescript: {
     "pg",
     "bcryptjs",
     "cloudinary",
+    "@azure/storage-blob",
   ],
 }
 
